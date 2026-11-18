@@ -1,0 +1,128 @@
+# =============================================================================
+# config.yaml — Frozen configuration for Semester B evaluation
+# Time Series AI for Real-Time Trading Risk Management
+# Version: 1.0 | Seed: 42
+# =============================================================================
+
+version: "1.0"
+seed: 42
+
+# ---------------------------------------------------------------------------
+# Instrument and data paths
+# ---------------------------------------------------------------------------
+instrument:
+  symbol: "EURUSD"
+  timeframe: "M1"
+
+paths:
+  market_m1: "v10/data/market/eurusd/m1"
+  market_m5: "v10/data/market/eurusd/m5"
+  context_dxy: "v10/data/context/dxy.csv"
+  context_backup: "v10/data/context/eurusd_backup.csv"
+  events_calendar: "v10/data/events/forexfactory_calendar.csv"
+  events_overrides: "v10/data/events/manual_overrides.csv"
+  macro: "v10/data/macro"
+  detectors_regime: "v10/data/detectors/regime.csv"
+  detectors_anomaly: "v10/data/detectors/anomaly.csv"
+  regime_calibration: "v10/data/detectors/regime_calibration.json"
+  execution_control: "v10/data/execution/control.csv"
+  execution_ack: "v10/data/execution/ack.csv"
+  windows_manifest: "v10/data/windows/windows.json"
+  logs: "v10/logs"
+  # MT5 bridge paths (Windows)
+  mt5_commands: "v10/MQL5/Files/commands/control.csv"
+  mt5_acks: "v10/MQL5/Files/acks/ack.csv"
+
+# ---------------------------------------------------------------------------
+# Feature engineering parameters
+# ---------------------------------------------------------------------------
+features:
+  returns_windows: [20, 60]
+  z_window: 30
+  atr_windows: [14, 28]
+  macd:
+    fast: 12
+    slow: 26
+    signal: 9
+  swing_deviation_atr_mult: 0.5
+  small_body_lookback: 20
+  small_body_threshold: 0.20        # body < 20% of TR
+  wick_epsilon: 1.0e-10
+
+# ---------------------------------------------------------------------------
+# Detector parameters
+# ---------------------------------------------------------------------------
+detectors:
+  kmeans:
+    k: 5
+    n_init: 10
+    seed: 42
+    calibration_days: 30             # calendar days of M1 bars
+    calibration_hour_utc: 6          # 06:00 UTC daily refit
+  cusum:
+    k_mult: 1.5                      # κ = 1.5 × σ_60
+    h_mult: 3.0                      # h = 3.0 × σ_60
+    sigma_window: 60
+  z_thresholds:
+    moderate: 2.0
+    severe: 3.0
+  isolation_forest:
+    n_estimators: 100
+    contamination: 0.01
+    seed: 42
+    vector_features:
+      - "ret_1m"
+      - "atr_14"
+      - "z_range"
+      - "slope_short"
+      - "wick_ratio"
+      - "event_flag"
+
+# ---------------------------------------------------------------------------
+# Decision policy
+# ---------------------------------------------------------------------------
+policy:
+  persistence:
+    label: 2                         # bars to confirm regime label change
+    moderate: 1                      # bars to confirm moderate anomaly
+    severe: 1                        # bars to confirm severe anomaly
+  throttle:
+    size_mult: 0.33                  # reduce to 1/3 of baseline
+    duration_bars: 5
+  pause:
+    duration_bars: 10
+  hedge:
+    size_mult: 0.10                  # 0.1× baseline
+    stop_atr_mult: 0.20             # stop = 0.2 × ATR_14
+    max_age_bars: 10
+  cooldowns:
+    throttle: 5
+    pause: 10
+    hedge: 10                        # bars after close before next hedge
+
+# ---------------------------------------------------------------------------
+# Event window flags
+# ---------------------------------------------------------------------------
+events:
+  window_high_minutes: 15            # ±15 min around High-impact
+  window_medium_minutes: 5           # ±5 min around Medium-impact
+
+# ---------------------------------------------------------------------------
+# Data quality gates
+# ---------------------------------------------------------------------------
+data_quality:
+  max_forward_fill_minutes: 2
+  cross_source_tolerance: 0.0010     # max |MT5 close − Yahoo close|
+  stale_context_minutes: 5
+  stale_detector_bars: 2
+
+# ---------------------------------------------------------------------------
+# Baseline strategy (frozen, Appendix D)
+# ---------------------------------------------------------------------------
+baseline:
+  ema_fast: 12
+  ema_slow: 26
+  momentum_z_gate: 0.6
+  stop_atr_mult: 0.8
+  target_atr_mult: 1.6
+  base_size: 1.0

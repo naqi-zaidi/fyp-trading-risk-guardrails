@@ -1,0 +1,9 @@
+ts_utc,symbol,action,params_json,config_version,reason_code,reason_text,nonce
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.74, anomaly=severe",24d94bec57f2
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.74, anomaly=severe",74d9e31bb9cb
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.74, anomaly=severe",e1a6e8dc2b79
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.75, anomaly=moderate",a22d700a96a4
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.75, anomaly=moderate",d5f8c2935747
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.75, anomaly=moderate",f918d2080092
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.75, anomaly=moderate",98d3808f6515
+2026-05-13T03:48:19Z,EURUSD,throttle,"{""size_mult"": 0.33}",1.0,VOLATILITY_MODERATE_EXPANSION,"regime trend_down, z_range=2.75, anomaly=moderate",3cc5dc6e57f3

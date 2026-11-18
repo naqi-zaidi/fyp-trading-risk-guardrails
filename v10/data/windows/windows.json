@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "windows": [
+    {
+      "code": "2026-CPI-Apr",
+      "start_utc": "2026-04-10T11:30:00Z",
+      "end_utc": "2026-04-10T15:00:00Z",
+      "notes": "US CPI release and immediate aftermath",
+      "family": "macro_event"
+    },
+    {
+      "code": "2026-NFP-Apr",
+      "start_utc": "2026-04-03T12:00:00Z",
+      "end_utc": "2026-04-03T14:00:00Z",
+      "notes": "US Nonfarm Payrolls",
+      "family": "macro_event"
+    },
+    {
+      "code": "2026-Quiet-Mar",
+      "start_utc": "2026-03-16T06:00:00Z",
+      "end_utc": "2026-03-20T20:59:00Z",
+      "notes": "Quiet week low impact events",
+      "family": "calm_week"
+    }
+  ]
+}
